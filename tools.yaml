@@ -1,0 +1,32 @@
+set_volume:
+  label: 音量设置
+  description: 把虚拟设备音量设置成具体数值
+  criteria: 用户明确给出目标音量数值，如“设为35”“音量调到160”。相对调大、调小、静音不归这里。
+adjust_volume:
+  label: 音量调节
+  description: 在当前音量基础上调大、调小、静音或取消静音
+  criteria: 用户请求相对调大、调小、静音或取消静音；也包括延续音量话题的“再大点”“再小点”。若明确给出目标数值则归 set_volume。
+shutdown:
+  label: 关机
+  description: 模拟关机，不操作宿主机
+  criteria: 当前请求是关闭设备、关机或关闭系统。讨论关机方法和引用命令不算执行请求。
+get_weather:
+  label: 天气查询
+  description: 返回固定样本天气，不请求外部天气服务
+  criteria: 询问某地天气、温度、降水或延续天气话题询问另一个地点。
+play_song:
+  label: 歌曲播放
+  description: 模拟播放器按歌名、歌手、情绪、语言或角色条件选择并播放
+  criteria: 用户明确请求播放歌曲或唱歌，可以只给风格或情绪，不必指定歌曲名。下一首、重播、停止和退出歌曲模式归 song_control。
+song_control:
+  label: 歌曲控制
+  description: 模拟播放器执行下一首、重播、停止或退出
+  criteria: 当前请求明确控制正在播放的歌曲：下一首、重播、停止播放或退出歌曲模式；诗歌、故事和普通聊天不归这里。
+handle_user_goodbye:
+  label: 告别
+  description: 生成简短告别语并结束当前对话会话
+  criteria: 当前用户单独或主要表达结束对话，如“再见”“先走了”“不聊了”；询问、翻译、引用、描述他人告别或同一轮继续提问时不归这里。每次新的明确告别都可以命中。
+chat:
+  label: 普通聊天
+  description: 不调用设备工具，直接生成自然语言回答
+  criteria: 问候、闲聊、知识问答、解释或不明确的功能请求。引用、翻译或讨论命令时也归这里。

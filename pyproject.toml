@@ -1,0 +1,13 @@
+[project]
+name = "intent-router"
+version = "0.1.0"
+description = "Jev intent routing playground"
+requires-python = ">=3.11"
+dependencies = ["fastapi>=0.115", "uvicorn>=0.34", "httpx>=0.28", "pyyaml>=6", "loguru>=0.7"]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

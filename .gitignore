@@ -1,0 +1,25 @@
+# Local secrets and credentials
+config.local.*
+.env*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Runtime output
+.logs/
+*.log
+.venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+.DS_Store

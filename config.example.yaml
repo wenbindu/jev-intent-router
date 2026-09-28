@@ -1,0 +1,18 @@
+server:
+  hostname: 127.0.0.1
+  port: 3000
+jev:
+  base_url: https://api.typesafe.ai/v1
+  api_key: ''
+  model: jev-latest
+  timeout_ms: 30000
+qwen:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  api_key: ''
+  model: qwen3.7-flash
+  timeout_ms: 45000
+deepseek:
+  base_url: https://api.deepseek.com
+  api_key: ''
+  model: deepseek-flash
+  timeout_ms: 45000
