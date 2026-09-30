@@ -1,32 +1,65 @@
-set_volume:
+tool_volume_set:
+  persistent_task: false
   label: 音量设置
   description: 把虚拟设备音量设置成具体数值
   criteria: 用户明确给出目标音量数值，如“设为35”“音量调到160”。相对调大、调小、静音不归这里。
-adjust_volume:
+tool_volume_adjust:
+  persistent_task: false
   label: 音量调节
   description: 在当前音量基础上调大、调小、静音或取消静音
-  criteria: 用户请求相对调大、调小、静音或取消静音；也包括延续音量话题的“再大点”“再小点”。若明确给出目标数值则归 set_volume。
-shutdown:
+  criteria: 用户请求相对调大、调小、静音或取消静音；也包括延续音量话题的“再大点”“再小点”。若明确给出目标数值则归 tool_volume_set。
+tool_shutdown:
+  persistent_task: false
   label: 关机
   description: 模拟关机，不操作宿主机
   criteria: 当前请求是关闭设备、关机或关闭系统。讨论关机方法和引用命令不算执行请求。
-get_weather:
+tool_weather:
+  persistent_task: false
   label: 天气查询
   description: 返回固定样本天气，不请求外部天气服务
-  criteria: 询问某地天气、温度、降水或延续天气话题询问另一个地点。
-play_song:
+  criteria: 用户请求查询现实中某地天气、温度、降水或延续天气查询询问另一个地点。
+tool_song_play:
+  persistent_task: true
   label: 歌曲播放
   description: 模拟播放器按歌名、歌手、情绪、语言或角色条件选择并播放
-  criteria: 用户明确请求播放歌曲或唱歌，可以只给风格或情绪，不必指定歌曲名。下一首、重播、停止和退出歌曲模式归 song_control。
-song_control:
+  criteria: 用户明确请求播放歌曲或唱歌，可以只给风格或情绪，不必指定歌曲名。上一首、下一首、重播、暂停、继续和停止播放归 tool_song_control。
+tool_song_control:
+  persistent_task: false
   label: 歌曲控制
-  description: 模拟播放器执行下一首、重播、停止或退出
-  criteria: 当前请求明确控制正在播放的歌曲：下一首、重播、停止播放或退出歌曲模式；诗歌、故事和普通聊天不归这里。
-handle_user_goodbye:
+  description: 模拟播放器执行上一首、下一首、重播、暂停、继续或停止
+  criteria: 当前请求明确控制歌曲播放器：上一首、下一首、重播、暂停、继续播放或停止播放。
+tool_goodbye:
+  persistent_task: false
   label: 告别
   description: 生成简短告别语并结束当前对话会话
   criteria: 当前用户单独或主要表达结束对话，如“再见”“先走了”“不聊了”；询问、翻译、引用、描述他人告别或同一轮继续提问时不归这里。每次新的明确告别都可以命中。
-chat:
-  label: 普通聊天
-  description: 不调用设备工具，直接生成自然语言回答
-  criteria: 问候、闲聊、知识问答、解释或不明确的功能请求。引用、翻译或讨论命令时也归这里。
+agent_roleplay:
+  persistent_task: true
+  label: 扮演游戏
+  description: 根据指定角色、世界观和剧情进行沉浸式互动
+  criteria: 用户希望助手扮演角色、参与互动剧情或继续当前角色扮演游戏。结合已有角色和世界观理解对话；只要求创作或讲述故事时归 agent_story。
+agent_english:
+  persistent_task: true
+  label: 英语教师
+  description: 英语口语、单词、语法、阅读、表达和日常对话教学
+  criteria: 用户希望学习或练习英语、获得英语表达讲解与纠正，或继续当前英语教学互动。结合教学目标理解练习和引用内容；仅使用英语交流不代表要求进入教学。
+agent_fitness:
+  persistent_task: true
+  label: 健身教练
+  description: 根据目标和身体情况提供循序渐进的训练建议
+  criteria: 用户希望获得运动、力量、有氧或体能训练建议，讨论训练动作、强度、安排与进度，或继续当前健身指导。以饮食和膳食搭配为主的请求归 agent_nutrition。
+agent_nutrition:
+  persistent_task: true
+  label: 营养师
+  description: 根据饮食习惯和目标提供均衡、实用的饮食建议
+  criteria: 用户希望获得日常营养、健康饮食、减脂或增肌饮食、膳食搭配方面的建议，或继续当前营养指导。以运动训练为主的请求归 agent_fitness。
+agent_story:
+  persistent_task: true
+  label: 讲故事
+  description: 根据人物、主题、风格和情节创作童话、冒险、幻想、治愈、悬疑和生活故事
+  criteria: 用户希望创作、讲述、续写、修改或更换故事，或围绕当前故事继续交流。结合人物和世界观理解追问；要求助手扮演角色开展沉浸式互动时归 agent_roleplay。
+agent_chat:
+  persistent_task: true
+  label: 闲聊
+  description: 温柔开朗地接住话题、关注情绪并自然延续对话
+  criteria: 用户希望轻松闲聊、分享生活与情绪，提出一般知识问题或解释请求，或明确转回普通聊天。当前专业对话中的简短回应和追问优先由对应 Agent 理解。

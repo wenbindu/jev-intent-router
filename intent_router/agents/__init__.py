@@ -1,3 +1,3 @@
-from .registry import AGENTS
+from .registry import HANDLERS
 
-__all__ = ["AGENTS"]
+__all__ = ["HANDLERS"]

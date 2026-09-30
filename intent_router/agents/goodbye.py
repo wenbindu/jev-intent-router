@@ -1,7 +1,7 @@
-from .tool import ToolAgent, parse_args, text_arg, tool_schema
+from .tool import ToolHandler, parse_args, text_arg, tool_schema
 
 
-class GoodbyeAgent(ToolAgent):
+class GoodbyeTool(ToolHandler):
     prior_turns = 0
     ends_session = True
 

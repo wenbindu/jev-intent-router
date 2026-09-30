@@ -1,7 +1,7 @@
-from .tool import ToolAgent, parse_args, text_arg, tool_schema
+from .tool import ToolHandler, parse_args, text_arg, tool_schema
 
 
-class WeatherAgent(ToolAgent):
+class WeatherTool(ToolHandler):
     prior_turns = 2
 
     def tool_spec(self) -> dict:

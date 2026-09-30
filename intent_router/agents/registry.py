@@ -1,22 +1,27 @@
-from ..catalog import CATALOG, ROUTES
+from ..routes import ROUTES
 from .chat import ChatAgent
-from .goodbye import GoodbyeAgent
-from .shutdown import ShutdownAgent
-from .song import SongAgent, SongControlAgent
-from .volume import AdjustVolumeAgent, SetVolumeAgent
-from .weather import WeatherAgent
+from .goodbye import GoodbyeTool
+from .shutdown import ShutdownTool
+from .song import SongTool, SongControlTool
+from .volume import AdjustVolumeTool, SetVolumeTool
+from .weather import WeatherTool
 
 
-AGENTS = {
-    "set_volume": SetVolumeAgent("set_volume", "音量设置 Agent", "deepseek"),
-    "adjust_volume": AdjustVolumeAgent("adjust_volume", "音量调节 Agent", "deepseek"),
-    "shutdown": ShutdownAgent("shutdown", "关机 Agent", "deepseek"),
-    "get_weather": WeatherAgent("get_weather", "天气查询 Agent", "deepseek"),
-    "play_song": SongAgent("play_song", "歌曲播放 Agent", "deepseek"),
-    "song_control": SongControlAgent("song_control", "歌曲控制 Agent", "deepseek"),
-    "handle_user_goodbye": GoodbyeAgent("handle_user_goodbye", "告别 Agent", "deepseek"),
-    "chat": ChatAgent("chat", "聊天 Agent", "qwen"),
+HANDLERS = {
+    "tool_volume_set": SetVolumeTool("tool_volume_set", "音量设置工具", "deepseek"),
+    "tool_volume_adjust": AdjustVolumeTool("tool_volume_adjust", "音量调节工具", "deepseek"),
+    "tool_shutdown": ShutdownTool("tool_shutdown", "关机工具", "deepseek"),
+    "tool_weather": WeatherTool("tool_weather", "天气查询工具", "deepseek"),
+    "tool_song_play": SongTool("tool_song_play", "歌曲播放工具", "deepseek"),
+    "tool_song_control": SongControlTool("tool_song_control", "歌曲控制工具", "deepseek"),
+    "tool_goodbye": GoodbyeTool("tool_goodbye", "告别工具", "deepseek"),
+    "agent_roleplay": ChatAgent("agent_roleplay", "扮演游戏 Agent", "qwen"),
+    "agent_english": ChatAgent("agent_english", "英语教师 Agent", "qwen"),
+    "agent_fitness": ChatAgent("agent_fitness", "健身教练 Agent", "qwen"),
+    "agent_nutrition": ChatAgent("agent_nutrition", "营养师 Agent", "qwen"),
+    "agent_story": ChatAgent("agent_story", "讲故事 Agent", "qwen"),
+    "agent_chat": ChatAgent("agent_chat", "闲聊 Agent", "qwen"),
 }
 
-if tuple(AGENTS) != ROUTES or set(AGENTS) != set(CATALOG):
-    raise ValueError("Agent 注册表与 Jev 路由不一致")
+if tuple(HANDLERS) != ROUTES:
+    raise ValueError("执行器注册表与 Jev 路由不一致")

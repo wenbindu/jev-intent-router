@@ -1,7 +1,7 @@
-from .tool import ToolAgent, parse_args, text_arg, tool_schema
+from .tool import ToolHandler, parse_args, text_arg, tool_schema
 
 
-class ShutdownAgent(ToolAgent):
+class ShutdownTool(ToolHandler):
     prior_turns = 1
 
     def tool_spec(self) -> dict:

@@ -4,41 +4,57 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jev / Intent Router</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="/static/style.css?v=20260930-2" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-icon">&gt;_</span><strong>jev</strong><span class="slash">/</span><span>intent router</span></div>
-    <span class="top-note">USER TEXT → JEV → AGENT → RESPONSE</span>
+    <div class="top-actions"><span class="top-note">ONE SESSION · AGENTS + TOOLS</span><div class="language-switch" role="group" aria-label="界面语言" data-i18n-aria-label="界面语言"><button type="button" data-locale="zh-CN" aria-pressed="true">中文</button><button type="button" data-locale="en" aria-pressed="false">EN</button></div></div>
   </header>
   <main class="shell">
     <section class="heading">
-      <div><div class="eyebrow">INTENT ROUTING LAB</div><h1>一句话，选择合适的 Agent。</h1><p>观察 Jev 如何分流对话与命令，以及每条路径的模型调用成本。</p></div>
-      <div id="connection" class="connection">检查配置中…</div>
+      <div><div class="eyebrow">INTENT ROUTING LAB</div><h1 data-i18n="一段对话，多种可能。">一段对话，多种可能。</h1><p data-i18n="6 个 Agent 共享主对话，工具负责执行。观察路由、状态与调用成本。">6 个 Agent 共享主对话，工具负责执行。观察路由、状态与调用成本。</p></div>
+      <div id="connection" class="connection" data-i18n="检查配置中…">检查配置中…</div>
     </section>
     <div class="layout">
-      <section class="panel conversation" aria-label="对话列表">
-        <div class="chat-header"><div class="chat-avatar">j</div><div class="chat-title"><strong>Intent Router</strong><span>微信式对话 · 单一消息列表</span></div><button id="clear" class="quiet" type="button">清空</button></div>
-        <div id="messages" class="messages"><div class="empty"><div class="empty-mark">↗</div><strong>发送一句话，观察它的去向</strong><p>音量调到 35、关机、播放一首歌、北京天气如何，或随便聊聊。</p></div></div>
-        <form id="composer" class="composer"><textarea id="input" rows="3" maxlength="4000" aria-label="输入消息" placeholder="输入一句话…"></textarea><div class="compose-foot"><span id="count">0 / 4000</span><div><button id="cancel" class="quiet" type="button" hidden>取消</button><button id="send" class="primary" type="submit">发送 ↵</button></div></div></form>
+      <div class="side chat-column">
+      <section class="panel conversation" aria-label="对话列表" data-i18n-aria-label="对话列表">
+        <div class="chat-header"><div class="chat-avatar">j</div><div class="chat-title"><strong>Intent Router</strong><span data-i18n="微信式对话 · 单一消息列表">微信式对话 · 单一消息列表</span></div><button id="clear" class="quiet" type="button" data-i18n="清空">清空</button></div>
+        <div id="messages" class="messages"><div class="empty"><div class="empty-mark">↗</div><strong data-i18n="发送一句话，观察它的去向">发送一句话，观察它的去向</strong><p data-i18n="角色扮演、练习英语、健身饮食、讲个故事，或随便聊聊。">角色扮演、练习英语、健身饮食、讲个故事，或随便聊聊。</p></div></div>
+        <form id="composer" class="composer"><textarea id="input" rows="3" maxlength="4000" aria-label="输入消息" data-i18n-aria-label="输入消息" placeholder="输入一句话…" data-i18n-placeholder="输入一句话…"></textarea><div class="compose-foot"><span id="count">0 / 4000</span><div><button id="cancel" class="quiet" type="button" hidden data-i18n="取消">取消</button><button id="send" class="primary" type="submit" data-i18n="发送 ↵">发送 ↵</button></div></div></form>
       </section>
+        <section class="panel trace-panel"><div class="panel-head"><div><span class="dot"></span><strong data-i18n="调用轨迹">调用轨迹</strong></div><span class="mono muted">THIS TURN</span></div><div id="status" class="status" aria-live="polite" data-i18n="等待输入">等待输入</div><div id="timings" class="timings"><p class="placeholder" data-i18n="发送后显示首 token、完整响应耗时与 token 用量。">发送后显示首 token、完整响应耗时与 token 用量。</p></div><div id="total" class="total" data-i18n="整轮耗时 —">整轮耗时 —</div></section>
+      </div>
       <div class="side">
         <section class="panel route-panel">
-          <div class="panel-head"><div><span class="dot"></span><strong>路由模块</strong></div><span id="confidence" class="mono muted">JEV —</span></div>
-          <div class="flow-start"><div class="flow-input">USER TEXT</div><div class="flow-arrow">↓</div><div id="jev-node" class="jev-node"><span>JEV</span><strong>意图路由</strong></div></div>
-          <div id="routes" class="route-tree"></div>
-          <div class="route-foot">Jev 只选择路径；工具参数由对应 Agent 继续解析。</div>
+          <div class="panel-head"><div><span class="dot"></span><strong data-i18n="路由模块">路由模块</strong></div><span id="confidence" class="mono muted">JEV —</span></div>
+          <div class="flow-start"><div class="flow-input">USER TEXT</div><div class="flow-arrow">↓</div><div id="jev-node" class="jev-node"><span>JEV</span><strong data-i18n="意图路由">意图路由</strong></div></div>
+          <div id="routes" class="route-groups"><section class="route-group" aria-label="Agent 路由" data-i18n-aria-label="Agent 路由"><div class="group-title"><strong>Agent <span>06</span></strong><small data-i18n="对话与生成">对话与生成</small></div><div id="agent-routes" class="route-tree"></div></section><section class="route-group tool-group" aria-label="Tools 路由" data-i18n-aria-label="Tools 路由"><div class="group-title"><strong>Tools <span>07</span></strong><small data-i18n="命令与执行">命令与执行</small></div><div id="tool-routes" class="route-tree"></div></section></div>
+          <div class="route-foot" data-i18n="持久任务占用设备；瞬时任务执行后保留当前任务背景。">持久任务占用设备；瞬时任务执行后保留当前任务背景。</div>
         </section>
-        <section class="panel trace-panel"><div class="panel-head"><div><span class="dot"></span><strong>调用轨迹</strong></div><span class="mono muted">THIS TURN</span></div><div id="status" class="status">等待输入</div><div id="timings" class="timings"><p class="placeholder">发送后显示首 token、完整响应耗时与 token 用量。</p></div><div id="total" class="total">整轮耗时 —</div></section>
       </div>
-      <section class="panel history-panel" aria-label="主消息列表">
-        <div class="panel-head"><div><span class="dot"></span><strong>主消息列表</strong></div><span id="history-count" class="muted">0 messages</span></div>
-        <p>保留 user、assistant、assistant.tool_calls 和 tool。各 Agent 从这里选取自己的上下文。</p>
+      <div class="side session-column">
+      <section class="panel session-panel" aria-label="Session 状态" data-i18n-aria-label="Session 状态">
+        <div class="panel-head"><div><span class="dot"></span><strong data-i18n="Session 状态">Session 状态</strong></div><span id="session-lifecycle" class="muted" data-i18n="等待输入">等待输入</span></div>
+        <dl class="session-facts" aria-live="polite"><div><dt data-i18n="当前持久任务">当前持久任务</dt><dd id="current-task" data-i18n="闲聊">闲聊</dd></div><div><dt data-i18n="用户轮次 / 消息">用户轮次 / 消息</dt><dd id="session-counts">0 / 0</dd></div></dl>
+        <div class="session-section"><h3><span class="section-label" data-i18n="设备状态">设备状态</span> <span>JSON</span></h3><pre id="device-state" class="json-view">{"volume":50,"muted":false}</pre></div>
+        <div class="session-section"><h3 data-i18n="持久任务变化">持久任务变化</h3><div id="transitions" class="transitions"></div></div>
+        <p class="session-note"><span data-i18n="同一份主对话 · 瞬时任务保留当前任务背景">同一份主对话 · 瞬时任务保留当前任务背景</span><br><span data-i18n="仅本页内存保存，刷新或清空会重置。">仅本页内存保存，刷新或清空会重置。</span></p>
+      </section>
+      <section class="panel history-panel" aria-label="主消息列表" data-i18n-aria-label="主消息列表">
+        <div class="panel-head"><div><span class="dot"></span><strong data-i18n="主消息列表">主消息列表</strong></div><span id="history-count" class="muted">0 messages</span></div>
+        <p data-i18n="唯一的主对话记录。Jev 与 6 个 Agent 共享历史；_route 记录处理路径。">唯一的主对话记录。Jev 与 6 个 Agent 共享历史；_route 记录处理路径。</p>
         <pre id="history">[]</pre>
       </section>
+      </div>
     </div>
-    <footer>音量、关机与歌曲为虚拟命令下发 · 天气为固定 mock 样本 · API Key 只保存在服务端配置文件</footer>
+    <footer data-i18n="音量、关机与歌曲为虚拟命令下发 · 天气为固定 mock 样本 · API Key 只保存在服务端配置文件">音量、关机与歌曲为虚拟命令下发 · 天气为固定 mock 样本 · API Key 只保存在服务端配置文件</footer>
   </main>
-  <script type="module" src="/static/app.js"></script>
+  <script type="module">
+    import { initLanguageSwitch } from "/static/i18n.js?v=20260930-2";
+    initLanguageSwitch();
+  </script>
+  <script type="module" src="/static/app.js?v=20260930-2"></script>
 </body>
 </html>

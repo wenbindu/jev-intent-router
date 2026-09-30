@@ -6,11 +6,12 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .catalog import CATALOG
-from .agents import AGENTS
-from .config import ROOT, load_config
+from .agents import HANDLERS
+from .config import ROOT, load_config, save_route_threshold
 from .exchange_log import configure_logging
 from .messages import parse_messages
 from .service import stream_turn
+from .state import TaskState
 
 configure_logging()
 
@@ -26,6 +27,15 @@ app = FastAPI(title="Jev Intent Router", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 
+@app.middleware("http")
+async def revalidate_frontend(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path in ("/", "/route") or request.url.path.startswith("/static/"):
+        # Keep cached files usable, but validate them before reuse after UI updates.
+        response.headers["Cache-Control"] = "no-cache"
+    return response
+
+
 @app.get("/")
 @app.get("/route")
 def page() -> FileResponse:
@@ -38,8 +48,23 @@ def status() -> dict:
     return {
         "ready": {name: bool(getattr(config, name).api_key.strip()) for name in ("jev", "qwen", "deepseek")},
         "models": {name: getattr(config, name).model for name in ("jev", "qwen", "deepseek")},
-        "routes": {route: {"label": value["label"], "description": value["description"], "agent": AGENTS[route].public(config)} for route, value in CATALOG.items()},
+        "routes": {route: {"label": value["label"], "description": value["description"], "criteria": value["criteria"], "threshold": config.route_thresholds[route], "agent": HANDLERS[route].public(config), "prompt": getattr(HANDLERS[route], "system_prompt", None)} for route, value in CATALOG.items()},
     }
+
+
+@app.patch("/api/routes/{route}/threshold")
+async def update_threshold(route: str, request: Request):
+    origin = request.headers.get("origin")
+    if origin and origin != str(request.base_url).rstrip("/"):
+        return JSONResponse({"error": "仅接受同源请求"}, status_code=403)
+    try:
+        payload = await request.json()
+        if not isinstance(payload, dict) or set(payload) != {"threshold"}:
+            raise ValueError("请求必须只包含 threshold")
+        threshold = save_route_threshold(route, payload["threshold"])
+    except (ValueError, TypeError, AttributeError) as exc:
+        return JSONResponse({"error": str(exc)}, status_code=400)
+    return {"route": route, "threshold": threshold}
 
 
 @app.post("/api/turn")
@@ -50,7 +75,8 @@ async def turn(request: Request):
     try:
         payload = await request.json()
         messages = parse_messages(payload.get("messages"))
+        task_state = TaskState.parse(payload.get("task_state"))
         config = load_config()
     except (ValueError, TypeError, AttributeError) as exc:
         return JSONResponse({"error": str(exc)}, status_code=400)
-    return StreamingResponse(stream_turn(messages, config, request.app.state.http_client), media_type="application/x-ndjson", headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+    return StreamingResponse(stream_turn(messages, config, request.app.state.http_client, task_state), media_type="application/x-ndjson", headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})

@@ -16,3 +16,17 @@ deepseek:
   api_key: ''
   model: deepseek-flash
   timeout_ms: 45000
+route_thresholds:
+  tool_volume_set: 0.5
+  tool_volume_adjust: 0.5
+  tool_shutdown: 0.5
+  tool_weather: 0.5
+  tool_song_play: 0.5
+  tool_song_control: 0.5
+  tool_goodbye: 0.5
+  agent_roleplay: 0.5
+  agent_english: 0.5
+  agent_fitness: 0.5
+  agent_nutrition: 0.5
+  agent_story: 0.5
+  agent_chat: 0.5

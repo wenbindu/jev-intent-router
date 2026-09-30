@@ -1,5 +1,7 @@
 from typing import Any
 
+from .routes import ROUTES
+
 
 def parse_messages(value: Any) -> list[dict]:
     if not isinstance(value, list) or not 1 <= len(value) <= 80:
@@ -9,9 +11,15 @@ def parse_messages(value: Any) -> list[dict]:
         if not isinstance(item, dict):
             raise ValueError("消息格式无效")
         role, content = item.get("role"), item.get("content")
+        metadata = {}
+        route = item.get("_route")
+        if route is not None and route not in ROUTES:
+            raise ValueError("_route 包含未知 Agent")
+        if "_route" in item:
+            metadata["_route"] = route
         if role == "user" and isinstance(content, str) and len(content) <= 4000:
-            result.append({"role": role, "content": content})
-        elif role == "assistant" and (content is None or isinstance(content, str) and len(content) <= 8000):
+            result.append({"role": role, "content": content, **metadata})
+        elif role == "assistant" and (content is None or isinstance(content, str) and len(content) <= 32000):
             calls = item.get("tool_calls")
             if calls is not None and (not isinstance(calls, list) or not all(
                 isinstance(c, dict) and c.get("type") == "function" and isinstance(c.get("id"), str)
@@ -20,9 +28,9 @@ def parse_messages(value: Any) -> list[dict]:
                 for c in calls
             )):
                 raise ValueError("工具调用记录无效")
-            result.append({"role": role, "content": content, **({"tool_calls": calls} if calls else {})})
+            result.append({"role": role, "content": content, **({"tool_calls": calls} if calls else {}), **metadata})
         elif role == "tool" and isinstance(content, str) and len(content) <= 8000 and isinstance(item.get("tool_call_id"), str) and isinstance(item.get("name"), str):
-            result.append({"role": role, "content": content, "tool_call_id": item["tool_call_id"], "name": item["name"]})
+            result.append({"role": role, "content": content, "tool_call_id": item["tool_call_id"], "name": item["name"], **metadata})
         else:
             raise ValueError("消息格式无效")
     if result[-1]["role"] != "user" or not result[-1]["content"].strip():
