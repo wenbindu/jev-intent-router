@@ -50,15 +50,7 @@ Open **[localhost:3000/route](http://127.0.0.1:3000/route)**. One server runs th
 
 ## How it works
 
-```mermaid
-flowchart LR
-    A[Message + session context] --> B[Jev · route + confidence]
-    B --> C[Threshold check]
-    C --> D[Qwen · conversational agent]
-    C --> E[DeepSeek · tool execution]
-    D --> F[Shared history + task state]
-    E --> F
-```
+![Conversation routing flow](docs/images/flow-en.svg)
 
 **Persistent tasks keep the context.** Agents and music playback can own the current task. Instant tools, such as volume adjustment, preserve it. Successful tool actions update state immediately, even if the final reply fails.
 

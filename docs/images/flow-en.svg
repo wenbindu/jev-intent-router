@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="280" viewBox="0 0 1100 280" role="img" aria-labelledby="title desc" xml:lang="en">
+  <title id="title">Conversation routing flow</title>
+  <desc id="desc">Message and session context pass through Jev and a confidence threshold, then a conversational agent or tool, and update the shared history and task state.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#ffd15a" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1100" height="280" rx="8" fill="#0d1410"/>
+  <g fill="none" stroke="#ffd15a" stroke-width="1.5" marker-end="url(#arrow)">
+    <path d="M 210 140 H 248"/>
+    <path d="M 468 140 H 490 V 78 H 516"/>
+    <path d="M 468 140 H 490 V 202 H 516"/>
+    <path d="M 746 78 H 786 V 140 H 826"/>
+    <path d="M 746 202 H 786 V 140 H 826"/>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif">
+    <g>
+      <rect x="24" y="94" width="186" height="92" rx="6" fill="#17221b" stroke="#344d3d"/>
+      <text x="40" y="116" font-size="10" letter-spacing="1.3" fill="#98b6a2">INPUT</text>
+      <text x="40" y="142" font-size="18" font-weight="600" fill="#e7f0e9">Message + context</text>
+      <text x="40" y="166" font-size="13" fill="#a4b7aa">Shared conversation</text>
+    </g>
+    <g>
+      <rect x="248" y="94" width="220" height="92" rx="6" fill="#292519" stroke="#ffd15a"/>
+      <text x="264" y="116" font-size="10" letter-spacing="1.3" fill="#98b6a2">ROUTER</text>
+      <text x="264" y="142" font-size="18" font-weight="600" fill="#ffe6a0">Jev</text>
+      <text x="264" y="166" font-size="13" fill="#a4b7aa">Route + confidence threshold</text>
+    </g>
+    <g>
+      <rect x="516" y="32" width="230" height="92" rx="6" fill="#17221b" stroke="#344d3d"/>
+      <text x="532" y="54" font-size="10" letter-spacing="1.3" fill="#98b6a2">AGENT</text>
+      <text x="532" y="80" font-size="18" font-weight="600" fill="#e7f0e9">Qwen</text>
+      <text x="532" y="104" font-size="13" fill="#a4b7aa">Conversation / fallback</text>
+    </g>
+    <g>
+      <rect x="516" y="156" width="230" height="92" rx="6" fill="#17221b" stroke="#344d3d"/>
+      <text x="532" y="178" font-size="10" letter-spacing="1.3" fill="#98b6a2">TOOL</text>
+      <text x="532" y="204" font-size="18" font-weight="600" fill="#e7f0e9">DeepSeek</text>
+      <text x="532" y="228" font-size="13" fill="#a4b7aa">Arguments → action → reply</text>
+    </g>
+    <g>
+      <rect x="826" y="94" width="250" height="92" rx="6" fill="#17221b" stroke="#344d3d"/>
+      <text x="842" y="116" font-size="10" letter-spacing="1.3" fill="#98b6a2">SESSION</text>
+      <text x="842" y="142" font-size="18" font-weight="600" fill="#e7f0e9">History + state</text>
+      <text x="842" y="166" font-size="13" fill="#a4b7aa">Commit successful changes</text>
+    </g>
+  </g>
+</svg>

@@ -50,15 +50,7 @@ uv run python -m intent_router
 
 ## 工作方式
 
-```mermaid
-flowchart LR
-    A[消息与会话背景] --> B[Jev · 路由与置信度]
-    B --> C[阈值判断]
-    C --> D[Qwen · 对话 Agent]
-    C --> E[DeepSeek · 工具执行]
-    D --> F[共享历史与任务状态]
-    E --> F
-```
+![对话路由流程](docs/images/flow-zh-CN.svg)
 
 **持久任务延续对话背景。** Agent 和歌曲播放可以接管当前任务；调音量等瞬时工具保留原任务。工具执行成功后立即更新状态，即使最终回复失败也保留结果。
 
