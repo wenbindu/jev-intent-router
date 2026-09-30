@@ -92,7 +92,7 @@ for (const route of routes) {
     bind(prompt, routeConfig[route].prompt);
     details.append(prompt);
   }
-  copy.append(details);
+  card.append(details);
   $(route.startsWith("agent_") ? "agent-routes" : "tool-routes").append(card);
 }
 const flowLines = createFlowLines(document.querySelector(".layout"), () => ({

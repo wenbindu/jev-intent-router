@@ -20,7 +20,7 @@
     <div class="layout">
       <div class="side chat-column">
       <section class="panel conversation" aria-label="对话列表" data-i18n-aria-label="对话列表">
-        <div class="chat-header"><div class="chat-avatar">j</div><div class="chat-title"><strong>Intent Router</strong><span data-i18n="微信式对话 · 单一消息列表">微信式对话 · 单一消息列表</span></div><button id="clear" class="quiet" type="button" data-i18n="清空">清空</button></div>
+        <div class="chat-header"><div class="chat-avatar">j</div><div class="chat-title"><strong><span class="panel-index" aria-hidden="true">01 /</span> Intent Router</strong><span data-i18n="微信式对话 · 单一消息列表">微信式对话 · 单一消息列表</span></div><button id="clear" class="quiet" type="button" data-i18n="清空">清空</button></div>
         <div id="messages" class="messages"><div class="empty"><div class="empty-mark">↗</div><strong data-i18n="发送一句话，观察它的去向">发送一句话，观察它的去向</strong><p data-i18n="角色扮演、练习英语、健身饮食、讲个故事，或随便聊聊。">角色扮演、练习英语、健身饮食、讲个故事，或随便聊聊。</p></div></div>
         <form id="composer" class="composer"><textarea id="input" rows="3" maxlength="4000" aria-label="输入消息" data-i18n-aria-label="输入消息" placeholder="输入一句话…" data-i18n-placeholder="输入一句话…"></textarea><div class="compose-foot"><span id="count">0 / 4000</span><div><button id="cancel" class="quiet" type="button" hidden data-i18n="取消">取消</button><button id="send" class="primary" type="submit" data-i18n="发送 ↵">发送 ↵</button></div></div></form>
       </section>
@@ -28,7 +28,7 @@
       </div>
       <div class="side">
         <section class="panel route-panel">
-          <div class="panel-head"><div><span class="dot"></span><strong data-i18n="路由模块">路由模块</strong></div><span id="confidence" class="mono muted">JEV —</span></div>
+          <div class="panel-head"><div><span class="panel-index" aria-hidden="true">02 /</span><strong data-i18n="路由模块">路由模块</strong></div><span id="confidence" class="mono muted">JEV —</span></div>
           <div class="flow-start"><div class="flow-input">USER TEXT</div><div class="flow-arrow">↓</div><div id="jev-node" class="jev-node"><span>JEV</span><strong data-i18n="意图路由">意图路由</strong></div></div>
           <div id="routes" class="route-groups"><section class="route-group" aria-label="Agent 路由" data-i18n-aria-label="Agent 路由"><div class="group-title"><strong>Agent <span>06</span></strong><small data-i18n="对话与生成">对话与生成</small></div><div id="agent-routes" class="route-tree"></div></section><section class="route-group tool-group" aria-label="Tools 路由" data-i18n-aria-label="Tools 路由"><div class="group-title"><strong>Tools <span>07</span></strong><small data-i18n="命令与执行">命令与执行</small></div><div id="tool-routes" class="route-tree"></div></section></div>
           <div class="route-foot" data-i18n="持久任务占用设备；瞬时任务执行后保留当前任务背景。">持久任务占用设备；瞬时任务执行后保留当前任务背景。</div>
@@ -36,7 +36,7 @@
       </div>
       <div class="side session-column">
       <section class="panel session-panel" aria-label="Session 状态" data-i18n-aria-label="Session 状态">
-        <div class="panel-head"><div><span class="dot"></span><strong data-i18n="Session 状态">Session 状态</strong></div><span id="session-lifecycle" class="muted" data-i18n="等待输入">等待输入</span></div>
+        <div class="panel-head"><div><span class="panel-index" aria-hidden="true">03 /</span><strong data-i18n="Session 状态">Session 状态</strong></div><span id="session-lifecycle" class="muted" data-i18n="等待输入">等待输入</span></div>
         <dl class="session-facts" aria-live="polite"><div><dt data-i18n="当前持久任务">当前持久任务</dt><dd id="current-task" data-i18n="闲聊">闲聊</dd></div><div><dt data-i18n="用户轮次 / 消息">用户轮次 / 消息</dt><dd id="session-counts">0 / 0</dd></div></dl>
         <div class="session-section"><h3><span class="section-label" data-i18n="设备状态">设备状态</span> <span>JSON</span></h3><pre id="device-state" class="json-view">{"volume":50,"muted":false}</pre></div>
         <div class="session-section"><h3 data-i18n="持久任务变化">持久任务变化</h3><div id="transitions" class="transitions"></div></div>
