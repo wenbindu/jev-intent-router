@@ -6,6 +6,10 @@
 
 `/route` 提供单页工作台：聊天及调用轨迹、Agent / Tools 路由、Session 状态及主消息列表。支持中文 / EN 界面、路由阈值编辑和金色流动路径。
 
+## 演示
+
+[▶ 观看演示视频](demo.mp4)
+
 ## 快速开始
 
 需要 Python 3.11+ 和 [uv](https://docs.astral.sh/uv/)。前端与 API 由同一个 FastAPI 服务提供，无需 Node.js 或前端构建。

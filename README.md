@@ -6,6 +6,10 @@ An observable conversation routing playground: Jev selects a route, Qwen powers 
 
 The `/route` dashboard brings together chat and call traces, Agent / Tools routing, session state, and the shared message history. It includes a Chinese / English interface, editable route thresholds, and animated gold paths showing the selected route.
 
+## Demo
+
+[▶ Watch the demo video](demo.mp4)
+
 ## Quick start
 
 Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). FastAPI serves both the frontend and API; no Node.js installation or frontend build is needed.
